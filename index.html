@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yari Wiki | Setup & Troubleshooting</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root { color-scheme: dark; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+        .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+        /* Cards match the dashboard: near-black surface, thin zinc border */
+        .card { background: #09090b; border: 1px solid rgba(39, 39, 42, .8); border-radius: 1rem; }
+        .inner { background: #000; border: 1px solid #27272a; border-radius: .75rem; }
+        .anchor { scroll-margin-top: 7rem; }
+
+        /* Buttons */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; background: #fff; color: #000; font-weight: 500; font-size: .875rem; border-radius: .5rem; padding: .6rem 1rem; transition: background .15s; }
+        .btn:hover { background: #e4e4e7; }
+        .btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border: 1px solid #27272a; color: #e4e4e7; font-weight: 600; font-size: .75rem; border-radius: .5rem; padding: .5rem .8rem; transition: background .15s, border-color .15s; }
+        .btn-ghost:hover { background: #18181b; border-color: #3f3f46; }
+
+        /* Top nav tabs */
+        .tab { color: #a1a1aa; font-size: .8125rem; font-weight: 600; padding: .5rem .8rem; border-radius: .5rem; transition: background .15s, color .15s; white-space: nowrap; }
+        .tab:hover { color: #fff; }
+        .tab.is-active { background: #18181b; color: #fff; }
+
+        /* Chips + tags */
+        .chip { display: inline-flex; align-items: center; gap: .45rem; border: 1px solid #27272a; background: #000; border-radius: .6rem; padding: .45rem .75rem; font-size: .8125rem; color: #d4d4d8; transition: background .15s, border-color .15s; }
+        .chip:hover { background: #18181b; border-color: #3f3f46; color: #fff; }
+        .tag { font-size: .6875rem; font-weight: 500; color: #a1a1aa; background: #18181b; border: 1px solid #27272a; padding: .2rem .55rem; border-radius: .4rem; white-space: nowrap; }
+        .kbd { font-size: .6875rem; color: #71717a; border: 1px solid #27272a; border-radius: .35rem; padding: .05rem .4rem; }
+
+        /* Numbered instruction lists */
+        .ilist { counter-reset: n; display: grid; gap: .65rem; }
+        .ilist > li { counter-increment: n; position: relative; padding-left: 1.9rem; font-size: .875rem; line-height: 1.55; color: #d4d4d8; }
+        .ilist > li::before { content: counter(n); position: absolute; left: 0; top: .1rem; width: 1.35rem; height: 1.35rem; border-radius: 9999px; background: #18181b; border: 1px solid #27272a; color: #a1a1aa; font-size: .6875rem; font-weight: 600; display: grid; place-items: center; }
+        .ilist b, .fixbody b { color: #fff; font-weight: 500; }
+        .sub { margin-top: .5rem; display: grid; gap: .35rem; font-size: .8125rem; color: #a1a1aa; }
+        .sub li::before { content: '\2013'; color: #52525b; margin-right: .5rem; }
+
+        /* Setup timeline */
+        .step { position: relative; padding-left: 3.25rem; padding-bottom: 1.75rem; }
+        .step:last-child { padding-bottom: 0; }
+        .step::before { content: ''; position: absolute; left: 1.05rem; top: 2.5rem; bottom: .35rem; width: 1px; background: #27272a; }
+        .step:last-child::before { display: none; }
+        .step-btn { position: absolute; left: 0; top: 0; width: 2.1rem; height: 2.1rem; border-radius: 9999px; border: 1px solid #3f3f46; background: #000; color: #e4e4e7; font-weight: 700; font-size: .8rem; display: grid; place-items: center; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+        .step-btn:hover { border-color: #a1a1aa; }
+        .step-btn svg { display: none; }
+        .step.done .step-btn { background: #fff; color: #000; border-color: #fff; }
+        .step.done .step-btn .n { display: none; }
+        .step.done .step-btn svg { display: block; }
+        .step-body { transition: opacity .2s; }
+        .step.done .step-body { opacity: .5; }
+
+        /* Callouts */
+        .callout { display: flex; gap: .6rem; align-items: flex-start; border: 1px solid #27272a; background: rgba(24, 24, 27, .6); border-radius: .75rem; padding: .75rem .9rem; font-size: .8125rem; line-height: 1.5; color: #a1a1aa; }
+        .callout.ok { border-color: rgba(34, 197, 94, .25); background: rgba(34, 197, 94, .06); color: #86efac; }
+        .callout.warn { border-color: rgba(250, 204, 21, .22); background: rgba(250, 204, 21, .05); color: #fde68a; }
+
+        /* Troubleshooting accordion */
+        .fix { background: #000; border: 1px solid #27272a; border-radius: .75rem; transition: border-color .15s; }
+        .fix:hover, .fix[open] { border-color: #3f3f46; }
+        .fix summary { list-style: none; cursor: pointer; }
+        .fix summary::-webkit-details-marker { display: none; }
+        .fix .chev { transition: transform .2s; }
+        .fix[open] .chev { transform: rotate(180deg); }
+
+        /* Copy pill for commands */
+        .copy { display: inline-flex; align-items: center; gap: .45rem; background: #18181b; border: 1px solid #27272a; border-radius: .5rem; padding: .25rem .6rem; color: #fff; font-size: .8125rem; cursor: pointer; transition: background .15s, border-color .15s; }
+        .copy:hover { background: #27272a; border-color: #3f3f46; }
+        .copy svg { color: #71717a; }
+
+        :focus-visible { outline: 2px solid #fff; outline-offset: 2px; border-radius: .4rem; }
+
+        #toast { transition: opacity .2s, transform .2s; }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+    </style>
+</head>
+
+<body class="bg-black text-zinc-100 antialiased min-h-screen flex flex-col selection:bg-zinc-700 selection:text-white">
+
+    <!-- Top navigation (same floating bar as the dashboard) -->
+    <header class="sticky top-4 z-50 px-4">
+        <div class="max-w-6xl mx-auto h-16 rounded-2xl border border-zinc-800 bg-black/80 backdrop-blur-xl px-3 sm:px-5 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+                <a href="#top" class="flex items-center gap-3 shrink-0" aria-label="Yari Wiki home">
+                    <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="currentColor" aria-hidden="true"><path d="M12 2 3.5 22h4.6l3.9-9.6 3.9 9.6h4.6z"/></svg>
+                    <span class="hidden sm:inline text-sm font-bold text-white" style="letter-spacing:.35em">YARI</span>
+                </a>
+                <nav class="flex items-center gap-1 overflow-x-auto" aria-label="Wiki sections">
+                    <a href="#setup" data-nav class="tab">Setup</a>
+                    <a href="#base-fixes" data-nav class="tab">Base Fixes</a>
+                    <a href="#troubleshooting" data-nav class="tab"><span class="sm:hidden">Fixes</span><span class="hidden sm:inline">Troubleshooting</span></a>
+                </nav>
+            </div>
+            <a href="https://discord.com/invite/cB23b7Btwr" target="_blank" rel="noopener noreferrer" class="btn-ghost shrink-0">
+                <i data-icon="discord" class="w-4 h-4"></i>
+                <span class="hidden sm:inline">JOIN DISCORD</span>
+            </a>
+        </div>
+    </header>
+
+    <main id="top" class="flex-grow w-full max-w-6xl mx-auto px-4 pt-12 pb-20">
+
+        <!-- Hero + search -->
+        <section class="max-w-3xl">
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-white">Yari Wiki</h1>
+            <p class="mt-3 text-base text-zinc-400 leading-relaxed">Set up Yari for the first time, or find the fix for a problem. Search below or jump to a section.</p>
+
+            <div class="relative mt-7">
+                <i data-icon="search" class="w-4 h-4 text-zinc-500 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search the wiki, e.g. restart, launcher, login"
+                       class="w-full bg-black border border-zinc-800 rounded-xl pl-11 pr-24 py-3.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-zinc-500 transition" aria-label="Search the wiki">
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                    <span id="count" class="text-xs text-zinc-500"></span>
+                    <button id="clear" type="button" class="hidden text-zinc-400 hover:text-white p-1" aria-label="Clear search"><i data-icon="x" class="w-4 h-4"></i></button>
+                    <span id="slash" class="kbd mono">/</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overview: two cards like the dashboard -->
+        <section id="overview" class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="card p-6">
+                <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="rocket" class="w-5 h-5"></i>Quick start</div>
+                <p class="text-sm text-zinc-500 mt-1">First time here? Work through the 5 setup steps in order.</p>
+
+                <div class="mt-6">
+                    <div class="flex items-center justify-between text-sm mb-2">
+                        <span id="progText" class="text-zinc-300">0 of 5 steps done</span>
+                        <span id="progPct" class="text-zinc-500 mono text-xs">0%</span>
+                    </div>
+                    <div class="h-1.5 rounded-full bg-zinc-800 overflow-hidden"><div id="bar" class="h-full bg-white rounded-full transition-all duration-300" style="width:0%"></div></div>
+                </div>
+                <a id="startBtn" href="#setup" class="btn w-full mt-5">Start setup</a>
+            </div>
+
+            <div class="card p-6">
+                <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="life-buoy" class="w-5 h-5"></i>Common problems</div>
+                <p class="text-sm text-zinc-500 mt-1">Something not working? Jump straight to the fix.</p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                    <a href="#fix-inject" class="chip">Won't inject / keeps asking to restart</a>
+                    <a href="#fix-launcher" class="chip">Launcher won't open</a>
+                    <a href="#fix-gta" class="chip">GTA doesn't start</a>
+                    <a href="#fix-recovery" class="chip">Recovery Mode loop</a>
+                    <a href="#fix-bootkit" class="chip">Bootkit won't initialize</a>
+                    <a href="#fix-login" class="chip">Can't log in</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Setup -->
+        <section id="setup" data-section class="anchor card p-6 md:p-8 mt-6">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="list-checks" class="w-5 h-5"></i>First-time setup</div>
+                    <p class="text-sm text-zinc-500 mt-1">Follow the steps in order. Tap a step's number to mark it done. Your progress is saved in this browser.</p>
+                </div>
+                <button id="reset" type="button" class="btn-ghost hidden"><i data-icon="rotate" class="w-3.5 h-3.5"></i>Reset progress</button>
+            </div>
+
+            <div class="callout mt-5">
+                <i data-icon="info" class="w-4 h-4 mt-0.5 shrink-0"></i>
+                <span>This is a community guide, not written by moderators or support staff. If these steps don't fix your issue, contact a moderator or administrator on Discord.</span>
+            </div>
+
+            <div class="mt-8">
+
+                <!-- Step 1 -->
+                <article id="step-1" class="step searchable" data-step="1" data-k="fast startup fast boot power options windows control panel">
+                    <button type="button" class="step-btn" aria-label="Mark step 1 as done"><span class="n">1</span><i data-icon="check" class="w-4 h-4"></i></button>
+                    <div class="step-body">
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <h3 class="text-base font-semibold text-white">Disable Fast Startup</h3>
+                            <span class="tag">Windows</span>
+                        </div>
+                        <div class="inner p-4 mt-3">
+                            <ol class="ilist">
+                                <li>Open <b>Control Panel</b></li>
+                                <li>Go to <b>Power Options</b></li>
+                                <li>Click <b>Choose what the power buttons do</b></li>
+                                <li>Select <b>Change settings that are currently unavailable</b></li>
+                                <li>Uncheck <b>Turn on fast startup (recommended)</b></li>
+                                <li>Click <b>Save changes</b></li>
+                            </ol>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Step 2 -->
+                <article id="step-2" class="step searchable" data-step="2" data-k="secure boot bios uefi restart">
+                    <button type="button" class="step-btn" aria-label="Mark step 2 as done"><span class="n">2</span><i data-icon="check" class="w-4 h-4"></i></button>
+                    <div class="step-body">
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <h3 class="text-base font-semibold text-white">Disable Secure Boot</h3>
+                            <span class="tag">BIOS</span>
+                        </div>
+                        <div class="inner p-4 mt-3">
+                            <ol class="ilist">
+                                <li>Restart your computer and enter the BIOS/UEFI settings. The key is usually <b>F2</b>, <b>DEL</b>, <b>ESC</b> or <b>F12</b> during startup, and varies by system</li>
+                                <li>Find the <b>Secure Boot</b> option</li>
+                                <li>Set Secure Boot to <b>Disabled</b></li>
+                                <li>Save changes and exit BIOS</li>
+                                <li>Restart your computer</li>
+                            </ol>
+                        </div>
+                        <p class="text-xs text-zinc-500 mt-2.5">BIOS layouts differ between manufacturers, so the option may sit under a different menu.</p>
+                    </div>
+                </article>
+
+                <!-- Step 3 -->
+                <article id="step-3" class="step searchable" data-step="3" data-k="real-time protection windows defender security antivirus">
+                    <button type="button" class="step-btn" aria-label="Mark step 3 as done"><span class="n">3</span><i data-icon="check" class="w-4 h-4"></i></button>
+                    <div class="step-body">
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <h3 class="text-base font-semibold text-white">Turn off Real-time protection</h3>
+                            <span class="tag">Windows Defender</span>
+                        </div>
+                        <div class="inner p-4 mt-3">
+                            <ol class="ilist">
+                                <li>Open <b>Windows Security</b></li>
+                                <li>Go to <b>Virus &amp; threat protection</b></li>
+                                <li>Click <b>Manage settings</b></li>
+                                <li>Turn <b>Real-time protection</b> off</li>
+                            </ol>
+                        </div>
+                        <p class="text-xs text-zinc-500 mt-2.5">You can turn this back on later.</p>
+                    </div>
+                </article>
+
+                <!-- Step 4 -->
+                <article id="step-4" class="step searchable" data-step="4" data-k="download loader exclusion exclusions defender official website">
+                    <button type="button" class="step-btn" aria-label="Mark step 4 as done"><span class="n">4</span><i data-icon="check" class="w-4 h-4"></i></button>
+                    <div class="step-body">
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <h3 class="text-base font-semibold text-white">Download the loader and add an exclusion</h3>
+                            <span class="tag">Windows Defender</span>
+                        </div>
+                        <div class="inner p-4 mt-3">
+                            <ol class="ilist">
+                                <li>Download the loader from the <b>official website</b></li>
+                                <li>Add the loader to Windows Defender exclusions:
+                                    <ul class="sub">
+                                        <li>Open <b>Windows Security</b></li>
+                                        <li>Go to <b>Virus &amp; threat protection</b></li>
+                                        <li>Click <b>Manage settings</b></li>
+                                        <li>Scroll to <b>Exclusions</b> and click <b>Add or remove exclusions</b></li>
+                                        <li>Click <b>Add an exclusion</b></li>
+                                        <li>Select <b>File</b> and choose the loader</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+                        <p class="text-xs text-zinc-500 mt-2.5">Once the exclusion is added, you can turn Real-time protection back on if you want.</p>
+                        <div class="callout warn mt-3">
+                            <i data-icon="shield" class="w-4 h-4 mt-0.5 shrink-0"></i>
+                            <span>Only download the loader from the official website. Never add an exclusion for a file from anywhere else.</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Step 5 -->
+                <article id="step-5" class="step searchable" data-step="5" data-k="run loader administrator login load injection restart successful injection">
+                    <button type="button" class="step-btn" aria-label="Mark step 5 as done"><span class="n">5</span><i data-icon="check" class="w-4 h-4"></i></button>
+                    <div class="step-body">
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <h3 class="text-base font-semibold text-white">Run the loader</h3>
+                            <span class="tag">Two runs</span>
+                        </div>
+                        <div class="inner p-4 mt-3">
+                            <p class="text-xs font-semibold text-zinc-300 mb-3">First run</p>
+                            <ol class="ilist">
+                                <li>Right-click the loader and choose <b>Run as administrator</b></li>
+                                <li>Log in to the loader</li>
+                                <li>Click <b>Load</b></li>
+                                <li>Wait while it processes</li>
+                                <li>When prompted, click <b>Restart</b></li>
+                            </ol>
+                            <div class="border-t border-zinc-900 my-4"></div>
+                            <p class="text-xs font-semibold text-zinc-300 mb-3">After the restart</p>
+                            <ol class="ilist">
+                                <li>Run the loader again as administrator</li>
+                                <li>Click <b>Load</b></li>
+                                <li>Wait for the process to finish</li>
+                            </ol>
+                        </div>
+                        <div class="callout ok mt-3">
+                            <i data-icon="check" class="w-4 h-4 mt-0.5 shrink-0"></i>
+                            <span>When you see <b class="mono" style="color:#bbf7d0">Successful Injection</b>, the program has loaded and you can start the game.</span>
+                        </div>
+                        <p class="text-xs text-zinc-500 mt-2.5">Stuck in a restart loop or no success message? See <a href="#fix-inject" class="text-zinc-300 underline underline-offset-2 hover:text-white">Won't inject / keeps asking to restart</a>.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Base fixes -->
+        <section id="base-fixes" data-section class="anchor card p-6 md:p-8 mt-6">
+            <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="wrench" class="w-5 h-5"></i>Base fixes</div>
+            <p class="text-sm text-zinc-500 mt-1">Try these before moving on to the specific fixes below.</p>
+
+            <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div class="inner searchable p-5" data-k="clear temporary temp files windows r maintenance">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="text-sm font-semibold text-white">Clear temporary files</h3>
+                        <span class="tag">Maintenance</span>
+                    </div>
+                    <ol class="ilist mt-4">
+                        <li>Press <b>Windows + R</b>, type
+                            <button type="button" class="copy mono ml-1" data-copy="%temp%" title="Copy">%temp% <i data-icon="copy" class="w-3.5 h-3.5"></i></button>
+                            and delete everything inside</li>
+                        <li>Press <b>Windows + R</b> again, type
+                            <button type="button" class="copy mono ml-1" data-copy="temp" title="Copy">temp <i data-icon="copy" class="w-3.5 h-3.5"></i></button>
+                            and delete everything inside</li>
+                    </ol>
+                </div>
+
+                <div class="inner searchable p-5" data-k="reinstall launcher folder redownload environment installer">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="text-sm font-semibold text-white">Reinstall the launcher</h3>
+                        <span class="tag">Environment</span>
+                    </div>
+                    <ol class="ilist mt-4">
+                        <li>Open the Yari Launcher and find its main directory path</li>
+                        <li>Delete the root <b>Yari</b> folder</li>
+                        <li>Download the build installer again</li>
+                    </ol>
+                </div>
+
+                <div class="inner searchable p-5" data-k="security overrides fast boot secure boot core isolation memory integrity configuration">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="text-sm font-semibold text-white">Check security settings</h3>
+                        <span class="tag">Configuration</span>
+                    </div>
+                    <ul class="mt-4 grid gap-2.5 text-sm text-zinc-300">
+                        <li class="flex items-start gap-2.5"><i data-icon="check" class="w-4 h-4 mt-0.5 text-zinc-500 shrink-0"></i><span><b class="text-white font-medium">Fast Boot</b> is disabled, in Windows Power Options or the BIOS</span></li>
+                        <li class="flex items-start gap-2.5"><i data-icon="check" class="w-4 h-4 mt-0.5 text-zinc-500 shrink-0"></i><span><b class="text-white font-medium">Secure Boot</b> is turned off</span></li>
+                        <li class="flex items-start gap-2.5"><i data-icon="check" class="w-4 h-4 mt-0.5 text-zinc-500 shrink-0"></i><span><b class="text-white font-medium">Core Isolation</b> is turned off. <a href="#fix-inject" class="text-zinc-400 underline underline-offset-2 hover:text-white">How to turn off Memory Integrity</a></span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Troubleshooting -->
+        <section id="troubleshooting" data-section class="anchor card p-6 md:p-8 mt-6">
+            <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="life-buoy" class="w-5 h-5"></i>Specific fixes &amp; troubleshooting</div>
+            <p class="text-sm text-zinc-500 mt-1">Find the problem you're seeing and open it for the solution.</p>
+
+            <div class="mt-6 grid gap-3">
+
+                <details id="fix-inject" class="fix searchable anchor" data-k="restart loop fails to inject memory integrity core isolation device security">
+                    <summary class="flex items-center justify-between gap-4 p-5">
+                        <span class="text-sm font-semibold text-white">Loader keeps asking for restart / fails to inject</span>
+                        <i data-icon="chevron" class="chev w-4 h-4 text-zinc-500 shrink-0"></i>
+                    </summary>
+                    <div class="fixbody px-5 pb-5">
+                        <p class="text-sm text-zinc-200 font-medium mb-3">Solution: turn off Memory Integrity</p>
+                        <div class="inner p-4">
+                            <ol class="ilist">
+                                <li>Open <b>Windows Security</b></li>
+                                <li>Go to <b>Device security</b></li>
+                                <li>Click <b>Core isolation details</b></li>
+                                <li>Turn <b>Memory integrity</b> off</li>
+                                <li>Restart your computer</li>
+                            </ol>
+                        </div>
+                    </div>
+                </details>
+
+                <details id="fix-launcher" class="fix searchable anchor" data-k="launcher not opening webview2 edge won't open">
+                    <summary class="flex items-center justify-between gap-4 p-5">
+                        <span class="text-sm font-semibold text-white">Yari Launcher not opening</span>
+                        <i data-icon="chevron" class="chev w-4 h-4 text-zinc-500 shrink-0"></i>
+                    </summary>
+                    <div class="fixbody px-5 pb-5 text-sm text-zinc-400 leading-relaxed">
+                        <p class="text-sm text-zinc-200 font-medium mb-2">Solution: install WebView2</p>
+                        <p>Download <b>Microsoft Edge WebView2 Evergreen Standalone</b> and choose the version that matches your Windows installation (x64, x86 or ARM64). You can check yours under Settings &rarr; System &rarr; About, next to <span class="text-zinc-200">System type</span>.</p>
+                    </div>
+                </details>
+
+                <details id="fix-gta" class="fix searchable anchor" data-k="gta not starting automatically second injection game launch manually">
+                    <summary class="flex items-center justify-between gap-4 p-5">
+                        <span class="text-sm font-semibold text-white">GTA not starting automatically after the second injection</span>
+                        <i data-icon="chevron" class="chev w-4 h-4 text-zinc-500 shrink-0"></i>
+                    </summary>
+                    <div class="fixbody px-5 pb-5 text-sm text-zinc-400 leading-relaxed">
+                        <p class="text-sm text-zinc-200 font-medium mb-2">This is normal</p>
+                        <p>On some builds the game doesn't launch by itself. Start the game executable manually.</p>
+                    </div>
+                </details>
+
+                <details id="fix-recovery" class="fix searchable anchor" data-k="windows recovery mode bootkit secure boot reinstall usb iso boot loop">
+                    <summary class="flex items-center justify-between gap-4 p-5">
+                        <span class="text-sm font-semibold text-white">Windows enters Recovery Mode after bootkit use</span>
+                        <i data-icon="chevron" class="chev w-4 h-4 text-zinc-500 shrink-0"></i>
+                    </summary>
+                    <div class="fixbody px-5 pb-5 text-sm text-zinc-400 leading-relaxed">
+                        <p class="text-sm text-zinc-200 font-medium mb-3">Solution: disable Secure Boot completely</p>
+                        <p>Follow <a href="#step-2" class="text-zinc-200 underline underline-offset-2 hover:text-white">Step 2</a> again and make sure Secure Boot is set to Disabled.</p>
+                        <p class="mt-3">If Windows keeps looping back into Recovery Mode, do a clean Windows reinstall using an 8 GB USB drive and the official Windows ISO.</p>
+                        <div class="callout warn mt-3">
+                            <i data-icon="info" class="w-4 h-4 mt-0.5 shrink-0"></i>
+                            <span>A clean reinstall can erase your files. Back up anything important first.</span>
+                        </div>
+                    </div>
+                </details>
+
+                <details id="fix-bootkit" class="fix searchable anchor" data-k="bootkit fails to initialize correct setup sfc scannow command prompt system file checker">
+                    <summary class="flex items-center justify-between gap-4 p-5">
+                        <span class="text-sm font-semibold text-white">Bootkit fails to initialize despite a correct setup</span>
+                        <i data-icon="chevron" class="chev w-4 h-4 text-zinc-500 shrink-0"></i>
+                    </summary>
+                    <div class="fixbody px-5 pb-5">
+                        <p class="text-sm text-zinc-200 font-medium mb-3">Solution: scan and repair system files</p>
+                        <div class="inner p-4">
+                            <ol class="ilist">
+                                <li>Open <b>Command Prompt</b> as administrator</li>
+                                <li>Run <button type="button" class="copy mono ml-1" data-copy="sfc /scannow" title="Copy">sfc /scannow <i data-icon="copy" class="w-3.5 h-3.5"></i></button></li>
+                                <li>Wait for the scan to finish</li>
+                                <li>Try initializing again</li>
+                            </ol>
+                        </div>
+                    </div>
+                </details>
+
+                <details id="fix-login" class="fix searchable anchor" data-k="cannot log in login website credentials two-factor 2fa authentication">
+                    <summary class="flex items-center justify-between gap-4 p-5">
+                        <span class="text-sm font-semibold text-white">Can't log in with your website credentials</span>
+                        <i data-icon="chevron" class="chev w-4 h-4 text-zinc-500 shrink-0"></i>
+                    </summary>
+                    <div class="fixbody px-5 pb-5 text-sm text-zinc-400 leading-relaxed">
+                        <p class="text-sm text-zinc-200 font-medium mb-2">Solution: turn off 2FA for now</p>
+                        <p>Temporarily disable Two-Factor Authentication (2FA) on the official website, then try logging in to the loader again.</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- Empty search state -->
+        <div id="empty" class="hidden card p-10 mt-6 text-center">
+            <p class="text-base font-semibold text-white">No results for "<span id="emptyTerm"></span>"</p>
+            <p class="text-sm text-zinc-500 mt-1.5">Try a shorter keyword, or ask on Discord.</p>
+            <button id="emptyClear" type="button" class="btn-ghost mt-5">Clear search</button>
+        </div>
+
+        <!-- Still stuck -->
+        <section id="help" class="card p-6 md:p-8 mt-6">
+            <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="discord" class="w-5 h-5"></i>Still stuck?</div>
+            <p class="text-sm text-zinc-500 mt-1">If your issue continues after these steps, contact a moderator or administrator on Discord.</p>
+            <a href="https://discord.com/invite/cB23b7Btwr" target="_blank" rel="noopener noreferrer" class="btn w-full mt-6">
+                <i data-icon="discord" class="w-4 h-4"></i>Get support on Discord
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-zinc-800/80 py-8">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+            <p>&copy; 2026 Yari. All rights reserved. <span class="text-zinc-600">Wiki v3.0</span></p>
+            <div class="flex items-center gap-6">
+                <a href="#" class="hover:text-zinc-300 transition">Privacy Policy</a>
+                <a href="#" class="hover:text-zinc-300 transition">Terms of Service</a>
+                <a href="https://discord.com/invite/cB23b7Btwr" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-300 transition">Discord</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-2 opacity-0 pointer-events-none z-50 bg-white text-black text-sm font-medium rounded-lg px-4 py-2.5 shadow-2xl" role="status" aria-live="polite">Copied</div>
+
+    <script>
+    (function () {
+        /* ---------- Icons ---------- */
+        var S = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+        var ICONS = {
+            search:  [S, '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>'],
+            check:   [S, '<path d="M20 6 9 17l-5-5"/>'],
+            chevron: [S, '<path d="m6 9 6 6 6-6"/>'],
+            copy:    [S, '<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>'],
+            x:       [S, '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>'],
+            info:    [S, '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>'],
+            rotate:  [S, '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>'],
+            shield:  [S, '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>'],
+            wrench:  [S, '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>'],
+            rocket:  [S, '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>'],
+            'list-checks': [S, '<path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/>'],
+            'life-buoy':   [S, '<circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/>'],
+            discord: ['fill="currentColor"', '<path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>']
+        };
+        document.querySelectorAll('i[data-icon]').forEach(function (el) {
+            var d = ICONS[el.getAttribute('data-icon')];
+            if (!d) return;
+            var cls = (el.getAttribute('class') || '') + ' shrink-0';
+            el.outerHTML = '<svg class="' + cls + '" viewBox="0 0 24 24" ' + d[0] + ' aria-hidden="true">' + d[1] + '</svg>';
+        });
+
+        /* ---------- Toast + copy ---------- */
+        var toast = document.getElementById('toast'), toastTimer;
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.style.opacity = '1';
+            toast.style.transform = 'translate(-50%, 0)';
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function () {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, 0.5rem)';
+            }, 1600);
+        }
+        function copyText(text) {
+            function fallback() {
+                var t = document.createElement('textarea');
+                t.value = text; t.style.position = 'fixed'; t.style.opacity = '0';
+                document.body.appendChild(t); t.select();
+                try { document.execCommand('copy'); showToast('Copied ' + text); } catch (e) { showToast('Copy failed'); }
+                document.body.removeChild(t);
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function () { showToast('Copied ' + text); }, fallback);
+            } else { fallback(); }
+        }
+        document.addEventListener('click', function (e) {
+            var b = e.target.closest('[data-copy]');
+            if (b) { e.preventDefault(); copyText(b.getAttribute('data-copy')); }
+        });
+
+        /* ---------- Setup progress (saved in this browser) ---------- */
+        var KEY = 'yari-wiki-steps';
+        var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
+        var bar = document.getElementById('bar'), progText = document.getElementById('progText'),
+            progPct = document.getElementById('progPct'), startBtn = document.getElementById('startBtn'),
+            resetBtn = document.getElementById('reset');
+
+        function load() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+        function save(a) { try { localStorage.setItem(KEY, JSON.stringify(a)); } catch (e) {} }
+
+        function refresh() {
+            var done = steps.filter(function (s) { return s.classList.contains('done'); });
+            var n = done.length, total = steps.length;
+            var pct = Math.round((n / total) * 100);
+            bar.style.width = pct + '%';
+            progPct.textContent = pct + '%';
+            progText.textContent = n + ' of ' + total + ' steps done';
+            resetBtn.classList.toggle('hidden', n === 0);
+            var next = steps.filter(function (s) { return !s.classList.contains('done'); })[0];
+            if (n === 0) { startBtn.textContent = 'Start setup'; startBtn.setAttribute('href', '#step-1'); }
+            else if (!next) { startBtn.textContent = 'Setup complete. Review the steps'; startBtn.setAttribute('href', '#setup'); }
+            else { startBtn.textContent = 'Continue with step ' + next.getAttribute('data-step'); startBtn.setAttribute('href', '#' + next.id); }
+            save(done.map(function (s) { return s.getAttribute('data-step'); }));
+        }
+
+        var saved = load();
+        steps.forEach(function (s) {
+            if (saved.indexOf(s.getAttribute('data-step')) > -1) s.classList.add('done');
+            s.querySelector('.step-btn').addEventListener('click', function () {
+                s.classList.toggle('done');
+                this.setAttribute('aria-pressed', s.classList.contains('done') ? 'true' : 'false');
+                refresh();
+            });
+        });
+        resetBtn.addEventListener('click', function () {
+            steps.forEach(function (s) { s.classList.remove('done'); });
+            refresh();
+        });
+        refresh();
+
+        /* ---------- Search (filters individual steps, cards and fixes) ---------- */
+        var q = document.getElementById('q'), clearBtn = document.getElementById('clear'), slash = document.getElementById('slash'),
+            count = document.getElementById('count'), empty = document.getElementById('empty'),
+            emptyTerm = document.getElementById('emptyTerm'), overview = document.getElementById('overview'),
+            help = document.getElementById('help');
+        var items = Array.prototype.slice.call(document.querySelectorAll('.searchable'));
+        var sections = Array.prototype.slice.call(document.querySelectorAll('[data-section]'));
+        var hay = items.map(function (el) { return (el.textContent + ' ' + (el.getAttribute('data-k') || '')).toLowerCase().replace(/\s+/g, ' '); });
+
+        function runSearch() {
+            var raw = q.value.trim(), words = raw.toLowerCase().split(/\s+/).filter(Boolean), hits = 0;
+            items.forEach(function (el, i) {
+                var match = words.every(function (w) { return hay[i].indexOf(w) > -1; });
+                el.classList.toggle('hidden', !match);
+                if (words.length && match) {
+                    hits++;
+                    if (el.tagName === 'DETAILS') el.open = true;
+                }
+            });
+            sections.forEach(function (s) {
+                var any = !words.length || Array.prototype.some.call(s.querySelectorAll('.searchable'), function (e) { return !e.classList.contains('hidden'); });
+                s.classList.toggle('hidden', !any);
+            });
+            overview.classList.toggle('hidden', words.length > 0);
+            empty.classList.toggle('hidden', !(words.length && hits === 0));
+            emptyTerm.textContent = raw;
+            count.textContent = words.length ? hits + (hits === 1 ? ' result' : ' results') : '';
+            clearBtn.classList.toggle('hidden', !raw);
+            slash.classList.toggle('hidden', !!raw);
+        }
+        function clearSearch() { q.value = ''; runSearch(); }
+        q.addEventListener('input', runSearch);
+        clearBtn.addEventListener('click', function () { clearSearch(); q.focus(); });
+        document.getElementById('emptyClear').addEventListener('click', function () { clearSearch(); q.focus(); });
+        document.addEventListener('keydown', function (e) {
+            var tag = (document.activeElement && document.activeElement.tagName) || '';
+            if (e.key === '/' && tag !== 'INPUT' && tag !== 'TEXTAREA') { e.preventDefault(); q.focus(); }
+            if (e.key === 'Escape' && document.activeElement === q) { clearSearch(); q.blur(); }
+        });
+
+        /* ---------- Jump links: open the target fix, clear search if it hides it ---------- */
+        function openTarget(id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            if (q.value) clearSearch();
+            if (el.tagName === 'DETAILS') el.open = true;
+        }
+        document.addEventListener('click', function (e) {
+            var a = e.target.closest('a[href^="#"]');
+            if (a && a.getAttribute('href').length > 1) openTarget(a.getAttribute('href').slice(1));
+        });
+        window.addEventListener('hashchange', function () { openTarget(location.hash.slice(1)); });
+        if (location.hash) openTarget(location.hash.slice(1));
+
+        /* ---------- Highlight the current section in the top nav ---------- */
+        var navLinks = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
+        function setActive(id) {
+            navLinks.forEach(function (l) { l.classList.toggle('is-active', l.getAttribute('href') === '#' + id); });
+        }
+        if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (en) { if (en.isIntersecting) setActive(en.target.id); });
+            }, { rootMargin: '-25% 0px -60% 0px' });
+            sections.forEach(function (s) { io.observe(s); });
+        }
+    })();
+    </script>
+</body>
+</html>
