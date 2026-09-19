@@ -612,6 +612,16 @@
 
             <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
 
+                <div id="max-payouts" class="inner searchable anchor p-5 lg:col-span-2" data-k="max payout maximum highest most money heist casino diamond cayo perico doomsday fleeca prison break humane labs series a pacific standard how much">
+                    <div class="flex items-center justify-between gap-2"><h3 class="text-sm font-semibold text-white">Max payouts</h3><span class="tag">Reference</span></div>
+                    <p class="text-xs text-zinc-500 mt-2">The most each heist can pay out. Press <b class="text-zinc-300 font-medium">Use</b> to load a figure into Total take below.</p>
+                    <ul id="mp-list" class="mt-4 grid grid-cols-1 sm:grid-cols-2 sm:gap-x-8"></ul>
+                    <div class="callout mt-4">
+                        <i data-icon="info" class="w-4 h-4 mt-0.5 shrink-0"></i>
+                        <span>Casino, Cayo Perico and Doomsday are confirmed by the Yari team. The original heists are the public Hard mode figures and haven't been confirmed by the team yet.</span>
+                    </div>
+                </div>
+
                 <div class="inner searchable p-5" data-k="heist payout split cut calculator crew players percentage fee bonus take">
                     <div class="flex items-center justify-between gap-2"><h3 class="text-sm font-semibold text-white">Payout split</h3><span class="tag">Crew</span></div>
 
@@ -748,23 +758,24 @@
 
 <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="inner p-5">
-                    <h3 class="text-sm font-semibold text-white">Admin &amp; Manager</h3>
+                    <h3 class="text-sm font-semibold text-white">Admins</h3>
                     <div class="mt-4 flex flex-wrap gap-2"><button type="button" class="copy mono" data-copy="rinkai.yari" title="Copy username">rinkai.yari <i data-icon="copy" class="w-3.5 h-3.5"></i></button><button type="button" class="copy mono" data-copy="kenpachi_yari" title="Copy username">kenpachi_yari <i data-icon="copy" class="w-3.5 h-3.5"></i></button></div>
                 </div>
                 <div class="inner p-5">
-                    <h3 class="text-sm font-semibold text-white">Manager & Community Manager</h3>
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        <button type="button" class="copy mono" data-copy="chigglesstick" title="Copy username">chigglesstick <i data-icon="copy" class="w-3.5 h-3.5"></i></button>
-                        <button type="button" class="copy mono" data-copy="gabriel55212" title="Copy username">gabriel55212 <i data-icon="copy" class="w-3.5 h-3.5"></i></button>
-                    </div>
+                    <h3 class="text-sm font-semibold text-white">Manager</h3>
+                    <div class="mt-4 flex flex-wrap gap-2"><button type="button" class="copy mono" data-copy="chigglesstick" title="Copy username">chigglesstick <i data-icon="copy" class="w-3.5 h-3.5"></i></button></div>
                 </div>
                 <div class="inner p-5">
-                    <h3 class="text-sm font-semibold text-white">Support</h3>
-                    <div class="mt-4 flex flex-wrap gap-2"><button type="button" class="copy mono" data-copy="guy12313_124321" title="Copy username">guy12313_124321 <i data-icon="copy" class="w-3.5 h-3.5"></i></button><button type="button" class="copy mono" data-copy="tyzinz" title="Copy username">tyzinz <i data-icon="copy" class="w-3.5 h-3.5"></i></button><button type="button" class="copy mono" data-copy="yari_rsg" title="Copy username">yari_rsg <i data-icon="copy" class="w-3.5 h-3.5"></i></button></div>
+                    <h3 class="text-sm font-semibold text-white">Community Manager</h3>
+                    <div class="mt-4 flex flex-wrap gap-2"><button type="button" class="copy mono" data-copy="gabriel55212" title="Copy username">gabriel55212 <i data-icon="copy" class="w-3.5 h-3.5"></i></button></div>
                 </div>
                 <div class="inner p-5">
                     <h3 class="text-sm font-semibold text-white">Moderators</h3>
                     <div class="mt-4 flex flex-wrap gap-2"><button type="button" class="copy mono" data-copy="hz02" title="Copy username">hz02 <i data-icon="copy" class="w-3.5 h-3.5"></i></button><button type="button" class="copy mono" data-copy="nico_rascalov" title="Copy username">nico_rascalov <i data-icon="copy" class="w-3.5 h-3.5"></i></button></div>
+                </div>
+                <div class="inner p-5 sm:col-span-2">
+                    <h3 class="text-sm font-semibold text-white">Support</h3>
+                    <div class="mt-4 flex flex-wrap gap-2"><button type="button" class="copy mono" data-copy="lxwsky" title="Copy username">lxwsky <i data-icon="copy" class="w-3.5 h-3.5"></i></button><button type="button" class="copy mono" data-copy="guy12313_124321" title="Copy username">guy12313_124321 <i data-icon="copy" class="w-3.5 h-3.5"></i></button><button type="button" class="copy mono" data-copy="yari_rsg" title="Copy username">yari_rsg <i data-icon="copy" class="w-3.5 h-3.5"></i></button><button type="button" class="copy mono" data-copy="tyzinz" title="Copy username">tyzinz <i data-icon="copy" class="w-3.5 h-3.5"></i></button></div>
                 </div>
             </div>
         </section>
@@ -988,6 +999,43 @@
         $('hc-players').addEventListener('change', function () { evenSplit(); calcHeist(); });
         $('hc-even').addEventListener('click', function () { evenSplit(); calcHeist(); });
         evenSplit(); calcHeist(); calcRuns();
+
+        var MAX_PAYOUTS = [
+            { n: 'Diamond Casino Heist', max: 3619000, ok: true },
+            { n: 'Cayo Perico Heist', max: 2555000, ok: true },
+            { n: 'Doomsday Heist', max: 2555000, ok: true },
+            { n: 'Pacific Standard Job', max: 1875000, ok: false },
+            { n: 'Humane Labs Raid', max: 1181250, ok: false },
+            { n: 'Series A Funding', max: 883750, ok: false },
+            { n: 'Prison Break', max: 875000, ok: false },
+            { n: 'Fleeca Job', max: 251563, ok: false }
+        ];
+        (function () {
+            var ul = $('mp-list');
+            MAX_PAYOUTS.forEach(function (m, i) {
+                var li = document.createElement('li');
+                li.className = 'flex items-center gap-3 py-2.5 border-t border-zinc-900';
+                var name = document.createElement('span');
+                name.className = 'text-sm text-zinc-200 min-w-0 flex-1 flex items-center gap-2 flex-wrap';
+                name.appendChild(document.createTextNode(m.n));
+                if (!m.ok) { var tg = document.createElement('span'); tg.className = 'tag'; tg.textContent = 'Unconfirmed'; name.appendChild(tg); }
+                var amt = document.createElement('span');
+                amt.className = 'mono text-sm text-white';
+                amt.textContent = money.format(m.max);
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'btn-ghost';
+                btn.textContent = 'Use';
+                btn.setAttribute('aria-label', 'Use ' + m.n + ' max payout as total take');
+                btn.addEventListener('click', function () {
+                    $('hc-take').value = String(m.max);
+                    calcHeist();
+                    showToast('Total take set to ' + money.format(m.max));
+                });
+                li.appendChild(name); li.appendChild(amt); li.appendChild(btn);
+                ul.appendChild(li);
+            });
+        })();
 
         document.querySelectorAll('i[data-icon]').forEach(function (el) {
             var d = ICONS[el.getAttribute('data-icon')];
