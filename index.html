@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yari Wiki | Setup & Troubleshooting</title>
+    <title>Yari Wiki | Setup, Features & Troubleshooting</title>
+    <link rel="icon" href="yari-logo.png">
 
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,29 +17,24 @@
         body { font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
         .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
-        /* Cards match the dashboard: near-black surface, thin zinc border */
         .card { background: #09090b; border: 1px solid rgba(39, 39, 42, .8); border-radius: 1rem; }
         .inner { background: #000; border: 1px solid #27272a; border-radius: .75rem; }
         .anchor { scroll-margin-top: 7rem; }
 
-        /* Buttons */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; background: #fff; color: #000; font-weight: 500; font-size: .875rem; border-radius: .5rem; padding: .6rem 1rem; transition: background .15s; }
         .btn:hover { background: #e4e4e7; }
         .btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border: 1px solid #27272a; color: #e4e4e7; font-weight: 600; font-size: .75rem; border-radius: .5rem; padding: .5rem .8rem; transition: background .15s, border-color .15s; }
         .btn-ghost:hover { background: #18181b; border-color: #3f3f46; }
 
-        /* Top nav tabs */
         .tab { color: #a1a1aa; font-size: .8125rem; font-weight: 600; padding: .5rem .8rem; border-radius: .5rem; transition: background .15s, color .15s; white-space: nowrap; }
         .tab:hover { color: #fff; }
         .tab.is-active { background: #18181b; color: #fff; }
 
-        /* Chips + tags */
         .chip { display: inline-flex; align-items: center; gap: .45rem; border: 1px solid #27272a; background: #000; border-radius: .6rem; padding: .45rem .75rem; font-size: .8125rem; color: #d4d4d8; transition: background .15s, border-color .15s; }
         .chip:hover { background: #18181b; border-color: #3f3f46; color: #fff; }
         .tag { font-size: .6875rem; font-weight: 500; color: #a1a1aa; background: #18181b; border: 1px solid #27272a; padding: .2rem .55rem; border-radius: .4rem; white-space: nowrap; }
         .kbd { font-size: .6875rem; color: #71717a; border: 1px solid #27272a; border-radius: .35rem; padding: .05rem .4rem; }
 
-        /* Numbered instruction lists */
         .ilist { counter-reset: n; display: grid; gap: .65rem; }
         .ilist > li { counter-increment: n; position: relative; padding-left: 1.9rem; font-size: .875rem; line-height: 1.55; color: #d4d4d8; }
         .ilist > li::before { content: counter(n); position: absolute; left: 0; top: .1rem; width: 1.35rem; height: 1.35rem; border-radius: 9999px; background: #18181b; border: 1px solid #27272a; color: #a1a1aa; font-size: .6875rem; font-weight: 600; display: grid; place-items: center; }
@@ -47,7 +42,6 @@
         .sub { margin-top: .5rem; display: grid; gap: .35rem; font-size: .8125rem; color: #a1a1aa; }
         .sub li::before { content: '\2013'; color: #52525b; margin-right: .5rem; }
 
-        /* Setup timeline */
         .step { position: relative; padding-left: 3.25rem; padding-bottom: 1.75rem; }
         .step:last-child { padding-bottom: 0; }
         .step::before { content: ''; position: absolute; left: 1.05rem; top: 2.5rem; bottom: .35rem; width: 1px; background: #27272a; }
@@ -61,12 +55,10 @@
         .step-body { transition: opacity .2s; }
         .step.done .step-body { opacity: .5; }
 
-        /* Callouts */
         .callout { display: flex; gap: .6rem; align-items: flex-start; border: 1px solid #27272a; background: rgba(24, 24, 27, .6); border-radius: .75rem; padding: .75rem .9rem; font-size: .8125rem; line-height: 1.5; color: #a1a1aa; }
         .callout.ok { border-color: rgba(34, 197, 94, .25); background: rgba(34, 197, 94, .06); color: #86efac; }
         .callout.warn { border-color: rgba(250, 204, 21, .22); background: rgba(250, 204, 21, .05); color: #fde68a; }
 
-        /* Troubleshooting accordion */
         .fix { background: #000; border: 1px solid #27272a; border-radius: .75rem; transition: border-color .15s; }
         .fix:hover, .fix[open] { border-color: #3f3f46; }
         .fix summary { list-style: none; cursor: pointer; }
@@ -74,10 +66,22 @@
         .fix .chev { transition: transform .2s; }
         .fix[open] .chev { transform: rotate(180deg); }
 
-        /* Copy pill for commands */
         .copy { display: inline-flex; align-items: center; gap: .45rem; background: #18181b; border: 1px solid #27272a; border-radius: .5rem; padding: .25rem .6rem; color: #fff; font-size: .8125rem; cursor: pointer; transition: background .15s, border-color .15s; }
         .copy:hover { background: #27272a; border-color: #3f3f46; }
         .copy svg { color: #71717a; }
+
+        .clist { display: grid; gap: .5rem; font-size: .875rem; line-height: 1.5; color: #d4d4d8; }
+        .clist > li { position: relative; padding-left: 1rem; }
+        .clist > li::before { content: ''; position: absolute; left: 0; top: .65em; width: 4px; height: 4px; border-radius: 9999px; background: #52525b; }
+        .path { color: #f4f4f5; font-weight: 500; }
+        .pathline { font-size: .75rem; color: #71717a; line-height: 1.5; }
+
+        .label { display: block; font-size: .75rem; font-weight: 500; color: #a1a1aa; margin-bottom: .35rem; }
+        .field { width: 100%; background: #000; border: 1px solid #27272a; border-radius: .6rem; padding: .55rem .75rem; font-size: .875rem; color: #fff; transition: border-color .15s; }
+        .field:hover { border-color: #3f3f46; }
+        .field:focus { border-color: #71717a; }
+        .field::placeholder { color: #52525b; }
+        select.field { appearance: none; -webkit-appearance: none; padding-right: 2rem; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>"); background-repeat: no-repeat; background-position: right .6rem center; background-size: 1rem; }
 
         :focus-visible { outline: 2px solid #fff; outline-offset: 2px; border-radius: .4rem; }
 
@@ -88,18 +92,23 @@
 
 <body class="bg-black text-zinc-100 antialiased min-h-screen flex flex-col selection:bg-zinc-700 selection:text-white">
 
-    <!-- Top navigation (same floating bar as the dashboard) -->
     <header class="sticky top-4 z-50 px-4">
         <div class="max-w-6xl mx-auto h-16 rounded-2xl border border-zinc-800 bg-black/80 backdrop-blur-xl px-3 sm:px-5 flex items-center justify-between gap-3">
             <div class="flex items-center gap-3 min-w-0">
                 <a href="#top" class="flex items-center gap-3 shrink-0" aria-label="Yari Wiki home">
                     <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="currentColor" aria-hidden="true"><path d="M12 2 3.5 22h4.6l3.9-9.6 3.9 9.6h4.6z"/></svg>
+                    <img src="yari-logo.png" alt="" class="hidden w-7 h-7 object-contain" onload="this.classList.remove('hidden');this.previousElementSibling.classList.add('hidden')">
                     <span class="hidden sm:inline text-sm font-bold text-white" style="letter-spacing:.35em">YARI</span>
                 </a>
                 <nav class="flex items-center gap-1 overflow-x-auto" aria-label="Wiki sections">
                     <a href="#setup" data-nav class="tab">Setup</a>
                     <a href="#base-fixes" data-nav class="tab">Base Fixes</a>
                     <a href="#troubleshooting" data-nav class="tab"><span class="sm:hidden">Fixes</span><span class="hidden sm:inline">Troubleshooting</span></a>
+                    <a href="#features" data-nav class="tab">Features</a>
+                    <a href="#calculators" data-nav class="tab">Calculators</a>
+                    <a href="#discord-role" data-nav class="tab"><span class="sm:hidden">Role</span><span class="hidden sm:inline">Discord Role</span></a>
+                    <a href="#changelog" data-nav class="tab"><span class="sm:hidden">Log</span><span class="hidden sm:inline">Changelog</span></a>
+                    <a href="#team" data-nav class="tab">Team</a>
                 </nav>
             </div>
             <a href="https://discord.com/invite/cB23b7Btwr" target="_blank" rel="noopener noreferrer" class="btn-ghost shrink-0">
@@ -111,14 +120,13 @@
 
     <main id="top" class="flex-grow w-full max-w-6xl mx-auto px-4 pt-12 pb-20">
 
-        <!-- Hero + search -->
         <section class="max-w-3xl">
             <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-white">Yari Wiki</h1>
-            <p class="mt-3 text-base text-zinc-400 leading-relaxed">Set up Yari for the first time, or find the fix for a problem. Search below or jump to a section.</p>
+            <p class="mt-3 text-base text-zinc-400 leading-relaxed">Set up Yari, learn what the features do, or find the fix for a problem. Written by the Yari support team. Search below or jump to a section.</p>
 
             <div class="relative mt-7">
                 <i data-icon="search" class="w-4 h-4 text-zinc-500 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-                <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search the wiki, e.g. restart, launcher, login"
+                <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search the wiki, e.g. restart, free shopping, discord role"
                        class="w-full bg-black border border-zinc-800 rounded-xl pl-11 pr-24 py-3.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-zinc-500 transition" aria-label="Search the wiki">
                 <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
                     <span id="count" class="text-xs text-zinc-500"></span>
@@ -128,8 +136,7 @@
             </div>
         </section>
 
-        <!-- Overview: two cards like the dashboard -->
-        <section id="overview" class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <section id="overview" class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div class="card p-6">
                 <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="rocket" class="w-5 h-5"></i>Quick start</div>
                 <p class="text-sm text-zinc-500 mt-1">First time here? Work through the 5 setup steps in order.</p>
@@ -154,11 +161,25 @@
                     <a href="#fix-recovery" class="chip">Recovery Mode loop</a>
                     <a href="#fix-bootkit" class="chip">Bootkit won't initialize</a>
                     <a href="#fix-login" class="chip">Can't log in</a>
+                    <a href="#fix-instant-finish" class="chip">Instant Finish not working</a>
+                    <a href="#fix-overload" class="chip">Overload not showing</a>
+                    <a href="#fix-role" class="chip">Can't claim Discord role</a>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="book" class="w-5 h-5"></i>Explore the wiki</div>
+                <p class="text-sm text-zinc-500 mt-1">Feature guides, calculators, updates and who to contact.</p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                    <a href="#features" class="chip">Feature guide</a>
+                    <a href="#calculators" class="chip">Heist calculators</a>
+                    <a href="#discord-role" class="chip">Claim your Discord role</a>
+                    <a href="#changelog" class="chip">Changelog</a>
+                    <a href="#team" class="chip">Contact support</a>
                 </div>
             </div>
         </section>
 
-        <!-- Setup -->
         <section id="setup" data-section class="anchor card p-6 md:p-8 mt-6">
             <div class="flex flex-wrap items-start justify-between gap-4">
                 <div>
@@ -170,12 +191,11 @@
 
             <div class="callout mt-5">
                 <i data-icon="info" class="w-4 h-4 mt-0.5 shrink-0"></i>
-                <span>This is a community guide, not written by moderators or support staff. If these steps don't fix your issue, contact a moderator or administrator on Discord.</span>
+                <span>This guide is written by the Yari support team. If these steps don't fix your issue, <a href="#team" class="text-zinc-200 underline underline-offset-2 hover:text-white">contact support on Discord</a>.</span>
             </div>
 
             <div class="mt-8">
 
-                <!-- Step 1 -->
                 <article id="step-1" class="step searchable" data-step="1" data-k="fast startup fast boot power options windows control panel">
                     <button type="button" class="step-btn" aria-label="Mark step 1 as done"><span class="n">1</span><i data-icon="check" class="w-4 h-4"></i></button>
                     <div class="step-body">
@@ -196,7 +216,6 @@
                     </div>
                 </article>
 
-                <!-- Step 2 -->
                 <article id="step-2" class="step searchable" data-step="2" data-k="secure boot bios uefi restart">
                     <button type="button" class="step-btn" aria-label="Mark step 2 as done"><span class="n">2</span><i data-icon="check" class="w-4 h-4"></i></button>
                     <div class="step-body">
@@ -217,7 +236,6 @@
                     </div>
                 </article>
 
-                <!-- Step 3 -->
                 <article id="step-3" class="step searchable" data-step="3" data-k="real-time protection windows defender security antivirus">
                     <button type="button" class="step-btn" aria-label="Mark step 3 as done"><span class="n">3</span><i data-icon="check" class="w-4 h-4"></i></button>
                     <div class="step-body">
@@ -237,7 +255,6 @@
                     </div>
                 </article>
 
-                <!-- Step 4 -->
                 <article id="step-4" class="step searchable" data-step="4" data-k="download loader exclusion exclusions defender official website">
                     <button type="button" class="step-btn" aria-label="Mark step 4 as done"><span class="n">4</span><i data-icon="check" class="w-4 h-4"></i></button>
                     <div class="step-body">
@@ -268,7 +285,6 @@
                     </div>
                 </article>
 
-                <!-- Step 5 -->
                 <article id="step-5" class="step searchable" data-step="5" data-k="run loader administrator login load injection restart successful injection">
                     <button type="button" class="step-btn" aria-label="Mark step 5 as done"><span class="n">5</span><i data-icon="check" class="w-4 h-4"></i></button>
                     <div class="step-body">
@@ -303,7 +319,6 @@
             </div>
         </section>
 
-        <!-- Base fixes -->
         <section id="base-fixes" data-section class="anchor card p-6 md:p-8 mt-6">
             <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="wrench" class="w-5 h-5"></i>Base fixes</div>
             <p class="text-sm text-zinc-500 mt-1">Try these before moving on to the specific fixes below.</p>
@@ -350,7 +365,6 @@
             </div>
         </section>
 
-        <!-- Troubleshooting -->
         <section id="troubleshooting" data-section class="anchor card p-6 md:p-8 mt-6">
             <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="life-buoy" class="w-5 h-5"></i>Specific fixes &amp; troubleshooting</div>
             <p class="text-sm text-zinc-500 mt-1">Find the problem you're seeing and open it for the solution.</p>
@@ -442,27 +456,317 @@
                         <p>Temporarily disable Two-Factor Authentication (2FA) on the official website, then try logging in to the loader again.</p>
                     </div>
                 </details>
+
+                <details id="fix-instant-finish" class="fix searchable anchor" data-k="instant finish not working free shopping enabled heist finish">
+                    <summary class="flex items-center justify-between gap-4 p-5">
+                        <span class="text-sm font-semibold text-white">Instant Finish doesn't work</span>
+                        <i data-icon="chevron" class="chev w-4 h-4 text-zinc-500 shrink-0"></i>
+                    </summary>
+                    <div class="fixbody px-5 pb-5 text-sm text-zinc-400 leading-relaxed">
+                        <p class="text-sm text-zinc-200 font-medium mb-2">Solution: turn off Free Shopping</p>
+                        <p>Instant Finish won't work while <b>Free Shopping</b> is enabled. Disable Free Shopping, then try Instant Finish again.</p>
+                    </div>
+                </details>
+
+                <details id="fix-overload" class="fix searchable anchor" data-k="overload not showing overlay borderless windowed fullscreen screen type graphics">
+                    <summary class="flex items-center justify-between gap-4 p-5">
+                        <span class="text-sm font-semibold text-white">Overload doesn't show</span>
+                        <i data-icon="chevron" class="chev w-4 h-4 text-zinc-500 shrink-0"></i>
+                    </summary>
+                    <div class="fixbody px-5 pb-5 text-sm text-zinc-400 leading-relaxed">
+                        <p class="text-sm text-zinc-200 font-medium mb-2">Solution: make the game window borderless</p>
+                        <p>Overload only shows when the game window is <b>borderless</b>. In GTA V, open the graphics settings and set <b>Screen Type</b> to a borderless option instead of Fullscreen.</p>
+                    </div>
+                </details>
+
+                <details id="fix-role" class="fix searchable anchor" data-k="discord role not received claim user role license key accounts link discord">
+                    <summary class="flex items-center justify-between gap-4 p-5">
+                        <span class="text-sm font-semibold text-white">Can't claim the Discord role</span>
+                        <i data-icon="chevron" class="chev w-4 h-4 text-zinc-500 shrink-0"></i>
+                    </summary>
+                    <div class="fixbody px-5 pb-5 text-sm text-zinc-400 leading-relaxed">
+                        <p class="text-sm text-zinc-200 font-medium mb-2">Solution: check your license and linked account</p>
+                        <p>The role is only available to users with a Yari license. Make sure your <b>license key is activated</b>, then add your Discord account under <b>Profile &rarr; Accounts</b>. The full walkthrough is in <a href="#discord-role" class="text-zinc-200 underline underline-offset-2 hover:text-white">Claim your Discord role</a>.</p>
+                    </div>
+                </details>
             </div>
         </section>
 
-        <!-- Empty search state -->
+        <section id="features" data-section class="anchor card p-6 md:p-8 mt-6">
+            <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="book" class="w-5 h-5"></i>Feature guide</div>
+            <p class="text-sm text-zinc-500 mt-1">Where to find each feature in the menu and what it includes. Paths read left to right: Tab &rarr; Section &rarr; Feature.</p>
+
+            <div class="mt-5 grid gap-3">
+                <div class="callout warn searchable" data-k="instant finish free shopping compatibility">
+                    <i data-icon="info" class="w-4 h-4 mt-0.5 shrink-0"></i>
+                    <span><b class="text-white font-medium">Instant Finish</b> won't work while <b class="text-white font-medium">Free Shopping</b> is enabled. Turn Free Shopping off first. <a href="#fix-instant-finish" class="text-zinc-200 underline underline-offset-2 hover:text-white">See the fix</a></span>
+                </div>
+                <div class="callout warn searchable" data-k="overload overlay borderless window compatibility">
+                    <i data-icon="info" class="w-4 h-4 mt-0.5 shrink-0"></i>
+                    <span><b class="text-white font-medium">Overload</b> won't show unless the game window is borderless. <a href="#fix-overload" class="text-zinc-200 underline underline-offset-2 hover:text-white">See the fix</a></span>
+                </div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                <div class="inner searchable p-5" data-k="heist missions helpers ignored by enemies remove enemies guns shoot enemies electrify cameras enhancements">
+                    <div class="flex items-center justify-between gap-2"><h3 class="text-sm font-semibold text-white">Heist mission helpers</h3><span class="tag">Network</span></div>
+                    <p class="pathline mono mt-3">Network &rarr; Enhancements &rarr; Heist Missions &rarr; Helpers</p>
+                    <ul class="clist mt-3">
+                        <li>Ignored By Enemies</li>
+                        <li>Remove Enemies Guns</li>
+                        <li>Shoot Enemies</li>
+                        <li>Electrify Cameras</li>
+                    </ul>
+                </div>
+
+                <div class="inner searchable p-5" data-k="recovery unlock all crimes vehicles weapons heists vanilla unicorn maxout inventory armor request services avenger terrorbyte moc kosatka dinghy tee revolver awards">
+                    <div class="flex items-center justify-between gap-2"><h3 class="text-sm font-semibold text-white">Recovery</h3><span class="tag">Network</span></div>
+                    <p class="pathline mono mt-3">Network &rarr; Recovery</p>
+                    <ul class="clist mt-3">
+                        <li><span class="path">Appearance</span>
+                            <ul class="sub"><li>Unlock Don't Cross The Line Tee</li></ul></li>
+                        <li><span class="path">Combat</span>
+                            <ul class="sub"><li>Unlock Double Action Revolver</li></ul></li>
+                        <li><span class="path">Awards</span>
+                            <ul class="sub"><li>Unlock All Crimes</li><li>Unlock All Vehicles</li><li>Unlock All Weapons</li><li>Unlock All Heists</li><li>Unlock Vanilla Unicorn</li></ul></li>
+                        <li><span class="path">Inventory</span>
+                            <ul class="sub"><li>Maxout Inventory</li><li>Maxout Armor</li></ul></li>
+                        <li><span class="path">Request Services</span>
+                            <ul class="sub"><li>Request Avenger</li><li>Request Terrorbyte</li><li>Request MOC</li><li>Request Kosatka</li><li>Request Dinghy</li></ul></li>
+                    </ul>
+                </div>
+
+                <div class="inner searchable p-5" data-k="session joiner skip join prompts override region">
+                    <div class="flex items-center justify-between gap-2"><h3 class="text-sm font-semibold text-white">Session Joiner</h3><span class="tag">Network</span></div>
+                    <p class="pathline mono mt-3">Network &rarr; Session Joiner</p>
+                    <ul class="clist mt-3">
+                        <li>Skip Join Prompts</li>
+                        <li>Override Region</li>
+                    </ul>
+                </div>
+
+                <div class="inner searchable p-5" data-k="pvp helper aim assist keyboard aim type target type bone bypass target restrictions laser sight no recoil no spread increase reachable range aimbot weapon">
+                    <div class="flex items-center justify-between gap-2"><h3 class="text-sm font-semibold text-white">PVP Helper</h3><span class="tag">Weapon</span></div>
+                    <p class="pathline mono mt-3">Weapon &rarr; PVP Helper</p>
+                    <ul class="clist mt-3">
+                        <li><span class="path">Aim Assist</span>
+                            <ul class="sub"><li>Enable Keyboard Aim Assist</li><li>Aim Type</li><li>Target Type</li><li>Bone</li><li>Bypass Target Restrictions</li></ul></li>
+                        <li>Laser Sight</li>
+                        <li>No Recoil</li>
+                        <li>No Spread</li>
+                        <li>Increase Reachable Range</li>
+                        <li>Aimbot (moved here in 1.1.37)</li>
+                    </ul>
+                </div>
+
+                <div class="inner searchable p-5" data-k="vehicle spawner funny vehicle xml vehicles despawn last despawn all amount max active limit crash mod shops">
+                    <div class="flex items-center justify-between gap-2"><h3 class="text-sm font-semibold text-white">Vehicles</h3><span class="tag">Vehicle</span></div>
+                    <p class="pathline mono mt-3">Vehicle &rarr; Spawner &rarr; Funny Vehicle &rarr; Xml Vehicles</p>
+                    <ul class="clist mt-3">
+                        <li>Despawn Last</li>
+                        <li>Despawn All</li>
+                        <li>Amount</li>
+                        <li>Max Active Limit. Stops you from crashing yourself when spawning too many vehicles</li>
+                    </ul>
+                    <p class="pathline mono mt-4">Vehicle &rarr; Mod Shops</p>
+                    <p class="text-sm text-zinc-300 mt-2 leading-relaxed">Mod Shops now sits directly in the Vehicle tab.</p>
+                </div>
+
+                <div class="inner searchable p-5" data-k="wardrobe custom saved outfits stand menu outfits self appearance">
+                    <div class="flex items-center justify-between gap-2"><h3 class="text-sm font-semibold text-white">Custom saved outfits</h3><span class="tag">Self</span></div>
+                    <p class="pathline mono mt-3">Self &rarr; Appearance &rarr; Wardrobe &rarr; Custom Saved Outfits</p>
+                    <p class="text-sm text-zinc-300 mt-3 leading-relaxed">Supports loading outfits saved from Stand Menu.</p>
+                </div>
+
+                <div class="inner searchable p-5" data-k="selected player players kick non-host original host trolling ragdoll electroshock non-stop">
+                    <div class="flex items-center justify-between gap-2"><h3 class="text-sm font-semibold text-white">Selected player</h3><span class="tag">Players</span></div>
+                    <p class="pathline mono mt-3">Players (Selected Player)</p>
+                    <ul class="clist mt-3">
+                        <li>Kick (Non-Host &amp; Original Host)</li>
+                        <li><span class="path">Trolling</span>
+                            <ul class="sub"><li>Ragdoll</li><li>Electroshock</li><li>Non-Stop Ragdoll</li><li>Non-Stop Electroshock</li></ul></li>
+                    </ul>
+                </div>
+
+                <div class="inner searchable p-5" data-k="navbar alignment dock left ctrl drag move ui toolkit disable blur effect settings interface">
+                    <div class="flex items-center justify-between gap-2"><h3 class="text-sm font-semibold text-white">Navbar &amp; interface</h3><span class="tag">Settings</span></div>
+                    <p class="text-sm text-zinc-300 mt-3 leading-relaxed">Hold <span class="kbd mono">Left Ctrl</span> and drag the navbar to dock it to the Left, Right, Top or Bottom of the screen.</p>
+                    <p class="pathline mono mt-4">Settings &rarr; UI Toolkit</p>
+                    <ul class="clist mt-3">
+                        <li>Disable Blur Effect</li>
+                    </ul>
+                </div>
+
+                <div class="inner searchable p-5" data-k="community hub discover download rate follow creators content">
+                    <div class="flex items-center justify-between gap-2"><h3 class="text-sm font-semibold text-white">Community Hub</h3><span class="tag">New</span></div>
+                    <p class="text-sm text-zinc-300 mt-3 leading-relaxed">Discover, download, rate and follow creators and their content, all in one place.</p>
+                    <p class="text-xs text-zinc-500 mt-2.5">A full tutorial is coming soon.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="calculators" data-section class="anchor card p-6 md:p-8 mt-6">
+            <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="calculator" class="w-5 h-5"></i>Heist calculators</div>
+            <p class="text-sm text-zinc-500 mt-1">Work out payouts before you start. Every number is editable and nothing leaves your browser.</p>
+
+            <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+                <div class="inner searchable p-5" data-k="heist payout split cut calculator crew players percentage fee bonus take">
+                    <div class="flex items-center justify-between gap-2"><h3 class="text-sm font-semibold text-white">Payout split</h3><span class="tag">Crew</span></div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+                        <div><label class="label" for="hc-take">Total take ($)</label><input id="hc-take" type="number" min="0" step="any" inputmode="decimal" class="field" placeholder="0"></div>
+                        <div><label class="label" for="hc-fee">Deductions (%)</label><input id="hc-fee" type="number" min="0" max="100" step="any" inputmode="decimal" class="field" placeholder="0"></div>
+                        <div><label class="label" for="hc-bonus">Bonus added ($)</label><input id="hc-bonus" type="number" min="0" step="any" inputmode="decimal" class="field" placeholder="0"></div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 mt-3 items-end">
+                        <div>
+                            <label class="label" for="hc-players">Players</label>
+                            <select id="hc-players" class="field">
+                                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4" selected>4</option>
+                            </select>
+                        </div>
+                        <button id="hc-even" type="button" class="btn-ghost h-[2.4rem]">Split evenly</button>
+                    </div>
+
+                    <div class="border-t border-zinc-900 my-5"></div>
+
+                    <div class="grid gap-3">
+                        <div class="flex items-center gap-3" data-row="1">
+                            <label for="hc-cut-1" class="text-sm text-zinc-300 w-24 shrink-0">Player 1</label>
+                            <div class="relative w-24 shrink-0"><input id="hc-cut-1" type="number" min="0" max="100" step="any" inputmode="decimal" class="field pr-7"><span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-500">%</span></div>
+                            <span id="hc-out-1" class="mono text-sm text-white ml-auto">$0</span>
+                        </div>
+                        <div class="flex items-center gap-3" data-row="2">
+                            <label for="hc-cut-2" class="text-sm text-zinc-300 w-24 shrink-0">Player 2</label>
+                            <div class="relative w-24 shrink-0"><input id="hc-cut-2" type="number" min="0" max="100" step="any" inputmode="decimal" class="field pr-7"><span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-500">%</span></div>
+                            <span id="hc-out-2" class="mono text-sm text-white ml-auto">$0</span>
+                        </div>
+                        <div class="flex items-center gap-3" data-row="3">
+                            <label for="hc-cut-3" class="text-sm text-zinc-300 w-24 shrink-0">Player 3</label>
+                            <div class="relative w-24 shrink-0"><input id="hc-cut-3" type="number" min="0" max="100" step="any" inputmode="decimal" class="field pr-7"><span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-500">%</span></div>
+                            <span id="hc-out-3" class="mono text-sm text-white ml-auto">$0</span>
+                        </div>
+                        <div class="flex items-center gap-3" data-row="4">
+                            <label for="hc-cut-4" class="text-sm text-zinc-300 w-24 shrink-0">Player 4</label>
+                            <div class="relative w-24 shrink-0"><input id="hc-cut-4" type="number" min="0" max="100" step="any" inputmode="decimal" class="field pr-7"><span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-500">%</span></div>
+                            <span id="hc-out-4" class="mono text-sm text-white ml-auto">$0</span>
+                        </div>
+                    </div>
+
+                    <div id="hc-note" class="callout mt-5">
+                        <i data-icon="info" class="w-4 h-4 mt-0.5 shrink-0"></i>
+                        <span id="hc-note-text"></span>
+                    </div>
+                    <p class="text-xs text-zinc-500 mt-3">Pool = total take minus deductions, plus the bonus. Heists apply fees differently, so set deductions to match the one you're running.</p>
+                </div>
+
+                <div class="inner searchable p-5" data-k="runs to target money goal grind per hour earnings time calculator payout per run">
+                    <div class="flex items-center justify-between gap-2"><h3 class="text-sm font-semibold text-white">Runs to target</h3><span class="tag">Grind</span></div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+                        <div><label class="label" for="rc-target">Target ($)</label><input id="rc-target" type="number" min="0" step="any" inputmode="decimal" class="field" placeholder="0"></div>
+                        <div><label class="label" for="rc-per">Payout per run ($)</label><input id="rc-per" type="number" min="0" step="any" inputmode="decimal" class="field" placeholder="0"></div>
+                        <div><label class="label" for="rc-time">Minutes per run</label><input id="rc-time" type="number" min="0" step="any" inputmode="decimal" class="field" placeholder="0"></div>
+                    </div>
+
+                    <div class="border-t border-zinc-900 my-5"></div>
+
+                    <dl class="grid gap-3 text-sm">
+                        <div class="flex items-center justify-between gap-4"><dt class="text-zinc-400">Runs needed</dt><dd id="rc-runs" class="mono text-white">&mdash;</dd></div>
+                        <div class="flex items-center justify-between gap-4"><dt class="text-zinc-400">Total time</dt><dd id="rc-total" class="mono text-white">&mdash;</dd></div>
+                        <div class="flex items-center justify-between gap-4"><dt class="text-zinc-400">Earnings per hour</dt><dd id="rc-hour" class="mono text-white">&mdash;</dd></div>
+                    </dl>
+                    <p class="text-xs text-zinc-500 mt-5">Enter your target and what a single run pays. Add the minutes a run takes to see total time and hourly earnings.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="discord-role" data-section class="anchor card p-6 md:p-8 mt-6">
+            <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="badge" class="w-5 h-5"></i>Claim your Discord role</div>
+            <p class="text-sm text-zinc-500 mt-1">Link your Discord account on the Yari website to claim the User role.</p>
+
+            <div class="callout warn mt-5">
+                <i data-icon="shield" class="w-4 h-4 mt-0.5 shrink-0"></i>
+                <span>You must be a user with a Yari license to claim this role.</span>
+            </div>
+
+            <div class="inner searchable p-5 mt-5" data-k="discord role claim user role license key activate profile accounts sign in yari.one link discord account">
+                <ol class="ilist">
+                    <li>Launch your web browser and go to <a href="https://yari.one" target="_blank" rel="noopener noreferrer" class="text-zinc-200 underline underline-offset-2 hover:text-white">Yari.one</a></li>
+                    <li>Click <b>Sign In</b> at the top right of your screen</li>
+                    <li>Sign in to your account
+                        <ul class="sub"><li>You need to sign up first if you don't have an account</li></ul>
+                    </li>
+                    <li>Activate your <b>license key</b> if you haven't done so already</li>
+                    <li>Go to your <b>profile page</b>
+                        <ul class="sub"><li>It's located next to the Dashboard icon</li></ul>
+                    </li>
+                    <li>Click <b>Accounts</b></li>
+                    <li>Add your <b>Discord account</b> to claim the <b>User</b> role</li>
+                </ol>
+            </div>
+            <p class="text-xs text-zinc-500 mt-2.5">Having trouble with these steps? See <a href="#fix-role" class="text-zinc-300 underline underline-offset-2 hover:text-white">Can't claim the Discord role</a> or <a href="#team" class="text-zinc-300 underline underline-offset-2 hover:text-white">contact support</a>.</p>
+        </section>
+
+        <section id="changelog" data-section class="anchor card p-6 md:p-8 mt-6">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="clock" class="w-5 h-5"></i>Changelog</div>
+                    <p class="text-sm text-zinc-500 mt-1">What changed in each update, newest first.</p>
+                </div>
+                <div class="flex items-center gap-1" role="group" aria-label="Changelog language">
+                    <button type="button" class="tab is-active" data-lang-btn="en" aria-pressed="true">English</button>
+                    <button type="button" class="tab" data-lang-btn="zh" aria-pressed="false">中文</button>
+                </div>
+            </div>
+            <div id="clog" class="mt-6 grid gap-3"></div>
+        </section>
+
         <div id="empty" class="hidden card p-10 mt-6 text-center">
             <p class="text-base font-semibold text-white">No results for "<span id="emptyTerm"></span>"</p>
             <p class="text-sm text-zinc-500 mt-1.5">Try a shorter keyword, or ask on Discord.</p>
             <button id="emptyClear" type="button" class="btn-ghost mt-5">Clear search</button>
         </div>
 
-        <!-- Still stuck -->
-        <section id="help" class="card p-6 md:p-8 mt-6">
-            <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="discord" class="w-5 h-5"></i>Still stuck?</div>
-            <p class="text-sm text-zinc-500 mt-1">If your issue continues after these steps, contact a moderator or administrator on Discord.</p>
-            <a href="https://discord.com/invite/cB23b7Btwr" target="_blank" rel="noopener noreferrer" class="btn w-full mt-6">
-                <i data-icon="discord" class="w-4 h-4"></i>Get support on Discord
-            </a>
+        <section id="team" class="anchor card p-6 md:p-8 mt-6">
+            <div class="flex items-center gap-2.5 text-lg font-semibold text-white"><i data-icon="users" class="w-5 h-5"></i>Contact &amp; team</div>
+            <p class="text-sm text-zinc-500 mt-1">Still stuck after the steps above? Reach out to support on Discord. Tap a username to copy it.</p>
+
+            <div class="inner p-5 mt-6 flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <p class="text-sm font-semibold text-white">Contact support</p>
+                    <p class="text-sm text-zinc-500 mt-1">Discord username</p>
+                    <div class="mt-3"><button type="button" class="copy mono" data-copy="guy12313_124321" title="Copy username">guy12313_124321 <i data-icon="copy" class="w-3.5 h-3.5"></i></button></div>
+                </div>
+                <a href="https://discord.com/invite/cB23b7Btwr" target="_blank" rel="noopener noreferrer" class="btn">
+                    <i data-icon="discord" class="w-4 h-4"></i>Join the Discord server
+                </a>
+            </div>
+
+            <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="inner p-5">
+                    <h3 class="text-sm font-semibold text-white">Admin &amp; Manager</h3>
+                    <div class="mt-4 flex flex-wrap gap-2"><button type="button" class="copy mono" data-copy="rinkai.yari" title="Copy username">rinkai.yari <i data-icon="copy" class="w-3.5 h-3.5"></i></button><button type="button" class="copy mono" data-copy="kenpachi_yari" title="Copy username">kenpachi_yari <i data-icon="copy" class="w-3.5 h-3.5"></i></button></div>
+                </div>
+                <div class="inner p-5">
+                    <h3 class="text-sm font-semibold text-white">Manager</h3>
+                    <div class="mt-4 flex flex-wrap gap-2"><button type="button" class="copy mono" data-copy="chigglesstick" title="Copy username">chigglesstick <i data-icon="copy" class="w-3.5 h-3.5"></i></button></div>
+                </div>
+                <div class="inner p-5">
+                    <h3 class="text-sm font-semibold text-white">Support</h3>
+                    <div class="mt-4 flex flex-wrap gap-2"><button type="button" class="copy mono" data-copy="guy12313_124321" title="Copy username">guy12313_124321 <i data-icon="copy" class="w-3.5 h-3.5"></i></button><button type="button" class="copy mono" data-copy="tyzinz" title="Copy username">tyzinz <i data-icon="copy" class="w-3.5 h-3.5"></i></button><button type="button" class="copy mono" data-copy="yari_rsg" title="Copy username">yari_rsg <i data-icon="copy" class="w-3.5 h-3.5"></i></button></div>
+                </div>
+                <div class="inner p-5">
+                    <h3 class="text-sm font-semibold text-white">Moderators</h3>
+                    <div class="mt-4 flex flex-wrap gap-2"><button type="button" class="copy mono" data-copy="hz02" title="Copy username">hz02 <i data-icon="copy" class="w-3.5 h-3.5"></i></button><button type="button" class="copy mono" data-copy="nico_rascalov" title="Copy username">nico_rascalov <i data-icon="copy" class="w-3.5 h-3.5"></i></button></div>
+                </div>
+            </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="border-t border-zinc-800/80 py-8">
         <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
             <p>&copy; 2026 Yari. All rights reserved. <span class="text-zinc-600">Wiki v3.0</span></p>
@@ -474,15 +778,18 @@
         </div>
     </footer>
 
-    <!-- Toast -->
     <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-2 opacity-0 pointer-events-none z-50 bg-white text-black text-sm font-medium rounded-lg px-4 py-2.5 shadow-2xl" role="status" aria-live="polite">Copied</div>
 
     <script>
     (function () {
-        /* ---------- Icons ---------- */
         var S = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
         var ICONS = {
             search:  [S, '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>'],
+            users:   [S, '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'],
+            calculator: [S, '<rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/>'],
+            book:    [S, '<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>'],
+            clock:   [S, '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>'],
+            badge:   [S, '<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/>'],
             check:   [S, '<path d="M20 6 9 17l-5-5"/>'],
             chevron: [S, '<path d="m6 9 6 6 6-6"/>'],
             copy:    [S, '<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>'],
@@ -496,6 +803,187 @@
             'life-buoy':   [S, '<circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/>'],
             discord: ['fill="currentColor"', '<path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>']
         };
+
+        var CLOG = [
+            { v: "1.1.40", date: "16 Sep 2026",
+              en: { added: [
+                    ["Network → Enhancements → Heist Missions → Helpers", ["Ignored By Enemies", "Remove Enemies Guns", "Shoot Enemies", "Electrify Cameras"]],
+                    ["Network → Recovery → Appearance → Unlock Don't Cross The Line Tee"],
+                    ["Network → Recovery → Combat → Unlock Double Action Revolver"],
+                    ["Network → Recovery → Awards", ["Unlock All Crimes", "Unlock All Vehicles", "Unlock All Weapons", "Unlock All Heists", "Unlock Vanilla Unicorn"]],
+                    ["Network → Recovery → Inventory", ["Maxout Inventory", "Maxout Armor"]],
+                    ["Network → Recovery → Request Services", ["Request Avenger", "Request Terrorbyte", "Request MOC", "Request Kosatka", "Request Dinghy"]]
+                  ], fixes: ["Stability & protections improvement"] },
+              zh: { added: [
+                    ["网络 → 增强功能 → 抢劫任务 → 助手", ["敌人忽略", "移除敌人枪械", "射击敌人", "使摄像头通电"]],
+                    ["网络 → 恢复 → 外观 → 解锁“不要越过界线”T恤"],
+                    ["网络 → 恢复 → 战斗 → 解锁“双动式左轮手枪”"],
+                    ["网络 → 恢复 → 奖励", ["解锁所有犯罪", "解锁所有载具", "解锁所有武器", "解锁所有抢劫任务", "解锁 Vanilla Unicorn"]],
+                    ["网络 → 恢复 → 物品栏", ["物品栏最大化", "护甲最大化"]],
+                    ["网络 → 恢复 → 请求服务", ["请求复仇者", "请求暴君科技", "请求机动作战中心", "请求虎鲸", "请求小艇"]]
+                  ], fixes: ["改进稳定性与防护"] } },
+            { v: "1.1.38", date: "08 Sep 2026",
+              en: { added: [
+                    ["Self → Appearance → Wardrobe → Custom Saved Outfits", ["Support for loading Stand Menu outfits"]],
+                    ["Vehicle → Spawner → Funny Vehicle → Xml Vehicles", ["Despawn Last", "Despawn All", "Amount", "Max Active Limit (prevents self crash when spawning too many)"]],
+                    ["Players (Selected Player) → Kick (Non-Host & Original Host)"],
+                    ["Players (Selected Player) → Trolling", ["Ragdoll", "Electroshock", "Non-Stop Ragdoll", "Non-Stop Electroshock"]],
+                    "Community Hub: discover, download, rate, and follow creators and their content, all in one place. A tutorial on how to use it is coming soon."
+                  ], fixes: ["'Increase Reachable Range' causing multiple issues", "Selected player vehicle trolling features"] },
+              zh: { added: [
+                    ["自己 → 外观 → 衣柜 → 自定义保存的服装", ["支持加载 Stand 菜单服装"]],
+                    ["载具 → 生成器 → 趣味载具 → Xml 载具", ["移除上一个", "全部移除", "数量", "最大激活数量限制（防止生成过多载具导致自身崩溃）"]],
+                    ["玩家（选中玩家）→ 踢出（非主机 & 原始主机）"],
+                    ["玩家（选中玩家）→ 恶搞", ["布娃娃", "电击", "持续布娃娃", "持续电击"]],
+                    "社区中心：在一个地方发现、下载、评分并关注创作者及其内容。关于如何使用的教程即将发布。"
+                  ], fixes: ["“增加可触及范围”导致多个问题", "选中玩家载具恶搞功能"] } },
+            { v: "1.1.37", date: "29 Aug 2026",
+              en: { added: [
+                    ["Weapon → PVP Helper → Aim Assist", ["Enable Keyboard Aim Assist", "Aim Type", "Target Type", "Bone", "Bypass Target Restrictions"]],
+                    ["Weapon → PVP Helper → Laser Sight"],
+                    ["Weapon → PVP Helper → No Recoil"],
+                    ["Weapon → PVP Helper → No Spread"],
+                    ["Weapon → PVP Helper → Increase Reachable Range"],
+                    ["Network → Session Joiner → Skip Join Prompts"],
+                    ["Network → Session Joiner → Override Region"],
+                    ["Settings → UI Toolkit → Disable Blur Effect"],
+                    "Adaptive Navbar Alignment: move and re-anchor the navbar across all 4 borders. Hold Left Ctrl and drag the navbar to dock it to any side (Left, Right, Top, or Bottom).",
+                    "Click-UI tweaks",
+                    "More crash protections"
+                  ], fixes: ["Moved 'Aimbot' to Weapon → PVP Helper", "Moved 'Mod Shops' directly to the Vehicle tab", "Mod Shops not applying the mods", "Organized vehicle spawner & xml vehicle", "Lag while using the menu"] },
+              zh: { added: [
+                    ["武器 → PVP 助手 → 瞄准辅助", ["启用键盘瞄准辅助", "瞄准类型", "目标类型", "骨骼", "绕过目标限制"]],
+                    ["武器 → PVP 助手 → 激光瞄准器"],
+                    ["武器 → PVP 助手 → 无后坐力"],
+                    ["武器 → PVP 助手 → 无散射"],
+                    ["武器 → PVP 助手 → 增加可触及范围"],
+                    ["网络 → 会话加入器 → 跳过加入提示"],
+                    ["网络 → 会话加入器 → 覆盖区域"],
+                    ["设置 → UI 工具包 → 禁用模糊效果"],
+                    "自适应导航栏对齐：可在 4 个边框之间无缝移动并重新固定导航栏。按住左 Ctrl 键并拖动导航栏，即可将其停靠到任意一侧（左、右、顶部或底部）。",
+                    "UI 点击调整",
+                    "更多崩溃防护"
+                  ], fixes: ["将“Aimbot”移动至 武器 → PVP 助手", "将“Mod Shops”直接移动至载具选项卡", "修复 Mod Shops 无法应用修改的问题", "整理载具生成器和 XML 载具", "修复使用菜单时出现卡顿的问题"] } }
+        ];
+        var LABELS = { en: ["Added", "Fixes"], zh: ["新增", "修复"] };
+
+        function h(tag, cls, txt) {
+            var e = document.createElement(tag);
+            if (cls) e.className = cls;
+            if (txt != null) e.textContent = txt;
+            return e;
+        }
+        function clist(items) {
+            var ul = h('ul', 'clist');
+            items.forEach(function (it) {
+                var li = h('li');
+                if (typeof it === 'string') {
+                    li.textContent = it;
+                } else {
+                    li.appendChild(h('span', 'path', it[0]));
+                    if (it[1] && it[1].length) {
+                        var sub = h('ul', 'sub');
+                        it[1].forEach(function (s) { sub.appendChild(h('li', '', s)); });
+                        li.appendChild(sub);
+                    }
+                }
+                ul.appendChild(li);
+            });
+            return ul;
+        }
+        function langBlock(lang, data) {
+            var d = h('div', lang === 'en' ? 'inner p-4' : 'inner p-4 hidden');
+            d.setAttribute('data-lang', lang);
+            if (lang === 'zh') d.setAttribute('lang', 'zh-CN');
+            d.appendChild(h('p', 'text-xs font-semibold text-zinc-300 mb-3', LABELS[lang][0]));
+            d.appendChild(clist(data.added));
+            d.appendChild(h('div', 'border-t border-zinc-900 my-4'));
+            d.appendChild(h('p', 'text-xs font-semibold text-zinc-300 mb-3', LABELS[lang][1]));
+            d.appendChild(clist(data.fixes));
+            return d;
+        }
+        var clogEl = document.getElementById('clog');
+        CLOG.forEach(function (c, i) {
+            var det = h('details', 'fix searchable anchor');
+            det.id = 'v' + c.v.replace(/\./g, '-');
+            det.setAttribute('data-k', 'changelog update version ' + c.v + ' ' + c.date);
+            if (i === 0) det.open = true;
+            var sum = h('summary', 'flex items-center justify-between gap-4 p-5');
+            var left = h('span', 'flex items-center gap-3 flex-wrap');
+            left.appendChild(h('span', 'text-sm font-semibold text-white', 'Yari ' + c.v));
+            if (i === 0) left.appendChild(h('span', 'tag', 'Latest'));
+            var right = h('span', 'flex items-center gap-3 shrink-0');
+            right.appendChild(h('span', 'text-xs text-zinc-500', c.date));
+            var chev = h('i', 'chev w-4 h-4 text-zinc-500 shrink-0');
+            chev.setAttribute('data-icon', 'chevron');
+            right.appendChild(chev);
+            sum.appendChild(left); sum.appendChild(right);
+            var body = h('div', 'fixbody px-5 pb-5');
+            body.appendChild(langBlock('en', c.en));
+            body.appendChild(langBlock('zh', c.zh));
+            det.appendChild(sum); det.appendChild(body);
+            clogEl.appendChild(det);
+        });
+        var langBtns = Array.prototype.slice.call(document.querySelectorAll('[data-lang-btn]'));
+        function setLang(l) {
+            langBtns.forEach(function (b) {
+                var on = b.getAttribute('data-lang-btn') === l;
+                b.classList.toggle('is-active', on);
+                b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+            Array.prototype.forEach.call(document.querySelectorAll('[data-lang]'), function (el) {
+                el.classList.toggle('hidden', el.getAttribute('data-lang') !== l);
+            });
+        }
+        langBtns.forEach(function (b) { b.addEventListener('click', function () { setLang(b.getAttribute('data-lang-btn')); }); });
+
+        var money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+        function $(id) { return document.getElementById(id); }
+        function val(id) { var v = parseFloat($(id).value); return isFinite(v) ? v : 0; }
+        function playerCount() { return parseInt($('hc-players').value, 10) || 1; }
+
+        function evenSplit() {
+            var n = playerCount(), base = Math.floor(10000 / n) / 100, used = 0;
+            for (var i = 1; i <= 4; i++) {
+                if (i > n) { $('hc-cut-' + i).value = ''; continue; }
+                var v = i === n ? Math.round((100 - used) * 100) / 100 : base;
+                used += v;
+                $('hc-cut-' + i).value = String(v);
+            }
+        }
+        function calcHeist() {
+            var take = Math.max(0, val('hc-take')), fee = Math.min(100, Math.max(0, val('hc-fee'))), bonus = Math.max(0, val('hc-bonus'));
+            var n = playerCount(), pool = take * (1 - fee / 100) + bonus, total = 0;
+            for (var i = 1; i <= 4; i++) {
+                var row = document.querySelector('[data-row="' + i + '"]');
+                row.classList.toggle('hidden', i > n);
+                var cut = i <= n ? Math.max(0, val('hc-cut-' + i)) : 0;
+                total += cut;
+                $('hc-out-' + i).textContent = money.format(pool * cut / 100);
+            }
+            total = Math.round(total * 100) / 100;
+            var off = Math.abs(total - 100) > 0.005;
+            $('hc-note').classList.toggle('warn', off);
+            $('hc-note-text').textContent = 'Pool: ' + money.format(pool) + '. ' + (off ? 'Cuts add up to ' + total + '%, not 100%.' : 'Cuts add up to 100%.');
+        }
+        function fmtTime(m) {
+            var hrs = Math.floor(m / 60), mins = Math.round(m - hrs * 60);
+            if (mins === 60) { hrs += 1; mins = 0; }
+            return hrs > 0 ? hrs + 'h ' + mins + 'm' : mins + 'm';
+        }
+        function calcRuns() {
+            var target = val('rc-target'), per = val('rc-per'), mins = val('rc-time');
+            var runs = (per > 0 && target > 0) ? Math.ceil(target / per) : null;
+            $('rc-runs').textContent = runs !== null ? runs.toLocaleString('en-US') : '\u2014';
+            $('rc-total').textContent = (runs !== null && mins > 0) ? fmtTime(runs * mins) : '\u2014';
+            $('rc-hour').textContent = (per > 0 && mins > 0) ? money.format(per * 60 / mins) : '\u2014';
+        }
+        Array.prototype.forEach.call(document.querySelectorAll('#hc-take, #hc-fee, #hc-bonus, [id^="hc-cut-"]'), function (el) { el.addEventListener('input', calcHeist); });
+        Array.prototype.forEach.call(document.querySelectorAll('#rc-target, #rc-per, #rc-time'), function (el) { el.addEventListener('input', calcRuns); });
+        $('hc-players').addEventListener('change', function () { evenSplit(); calcHeist(); });
+        $('hc-even').addEventListener('click', function () { evenSplit(); calcHeist(); });
+        evenSplit(); calcHeist(); calcRuns();
+
         document.querySelectorAll('i[data-icon]').forEach(function (el) {
             var d = ICONS[el.getAttribute('data-icon')];
             if (!d) return;
@@ -503,7 +991,6 @@
             el.outerHTML = '<svg class="' + cls + '" viewBox="0 0 24 24" ' + d[0] + ' aria-hidden="true">' + d[1] + '</svg>';
         });
 
-        /* ---------- Toast + copy ---------- */
         var toast = document.getElementById('toast'), toastTimer;
         function showToast(msg) {
             toast.textContent = msg;
@@ -532,7 +1019,6 @@
             if (b) { e.preventDefault(); copyText(b.getAttribute('data-copy')); }
         });
 
-        /* ---------- Setup progress (saved in this browser) ---------- */
         var KEY = 'yari-wiki-steps';
         var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
         var bar = document.getElementById('bar'), progText = document.getElementById('progText'),
@@ -572,11 +1058,10 @@
         });
         refresh();
 
-        /* ---------- Search (filters individual steps, cards and fixes) ---------- */
         var q = document.getElementById('q'), clearBtn = document.getElementById('clear'), slash = document.getElementById('slash'),
             count = document.getElementById('count'), empty = document.getElementById('empty'),
             emptyTerm = document.getElementById('emptyTerm'), overview = document.getElementById('overview'),
-            help = document.getElementById('help');
+            help = document.getElementById('team');
         var items = Array.prototype.slice.call(document.querySelectorAll('.searchable'));
         var sections = Array.prototype.slice.call(document.querySelectorAll('[data-section]'));
         var hay = items.map(function (el) { return (el.textContent + ' ' + (el.getAttribute('data-k') || '')).toLowerCase().replace(/\s+/g, ' '); });
@@ -612,7 +1097,6 @@
             if (e.key === 'Escape' && document.activeElement === q) { clearSearch(); q.blur(); }
         });
 
-        /* ---------- Jump links: open the target fix, clear search if it hides it ---------- */
         function openTarget(id) {
             var el = document.getElementById(id);
             if (!el) return;
@@ -626,7 +1110,6 @@
         window.addEventListener('hashchange', function () { openTarget(location.hash.slice(1)); });
         if (location.hash) openTarget(location.hash.slice(1));
 
-        /* ---------- Highlight the current section in the top nav ---------- */
         var navLinks = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
         function setActive(id) {
             navLinks.forEach(function (l) { l.classList.toggle('is-active', l.getAttribute('href') === '#' + id); });
@@ -635,7 +1118,7 @@
             var io = new IntersectionObserver(function (entries) {
                 entries.forEach(function (en) { if (en.isIntersecting) setActive(en.target.id); });
             }, { rootMargin: '-25% 0px -60% 0px' });
-            sections.forEach(function (s) { io.observe(s); });
+            sections.concat(help ? [help] : []).forEach(function (s) { io.observe(s); });
         }
     })();
     </script>
